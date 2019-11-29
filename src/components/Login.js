@@ -27,7 +27,8 @@ class Login extends Component {
                 value: "",
                 verified: false
             },
-            err: false
+            err: false,
+            textErr: ''
         }
     }
 
@@ -83,10 +84,17 @@ class Login extends Component {
             .then(res => {
                 // console.log("respuesta del POST en cliente:", res.data)
                 this.props.history.push("/upload")
+                
+            }).catch(  error => {
+                this.setState({
+                    err: true,
+                    textErr: 'Usuario y/o contraseña incorrectos'
+                })
             })
         } else {
             this.setState({
-                err: true
+                err: true,
+                textErr: 'Por favor ingrese datos antes de enviar'
             })
         }
 
@@ -108,7 +116,7 @@ class Login extends Component {
                 <SweetAlert
                     show={this.state.err}
                     title="Login"
-                    text="Por favor ingrese datos antes de enviar"
+                    text={ this.state.textErr }
                     onConfirm={() => this.setState({ err: false })}
                 />
             </form>

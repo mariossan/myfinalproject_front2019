@@ -4,6 +4,8 @@ import axios from 'axios'
 import { withSwalInstance } from 'sweetalert2-react'
 import swal from 'sweetalert2'
 import { throwStatement } from "@babel/types"
+
+const { withRouter } = require("react-router-dom")
  
 const SweetAlert = withSwalInstance(swal)
 
@@ -109,6 +111,15 @@ class Formregistro extends Component {
             })
             .then(res => {
                 console.log("Respuesta del POST en cliente de regisrto:", res.data)
+                this.props.history.push("/upload")
+
+            }).catch(error => {
+                this.setState( {
+                    tetxErr: 'El usuario ya existe previamente, intente hacer login',
+                    err: true
+                } )
+                console.log('se detecto un error', error)
+
             })
         } else {
             this.setState({
@@ -190,4 +201,5 @@ class Formregistro extends Component {
     }
 }
 
-export default Formregistro
+/* export default Formregistro */
+export default withRouter(Formregistro)
